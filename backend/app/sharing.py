@@ -90,3 +90,43 @@ async def list_shares(graph_id: str, user: AuthenticatedUser = Depends(get_curre
         return [dict(r) for r in rows]
     finally:
         await conn.close()
+
+
+@router.get("/public")
+async def list_public(search: Optional[str] = None, limit: int = 20, offset: int = 0):
+    conn = await asyncpg.connect(DATABASE_URL)
+    try:
+        if search:
+            pattern = f"%{search}%"
+            rows = await conn.fetch(
+                """
+                SELECT g.id, g.name, COALESCE(g.description,'') AS description,
+                       g.tags, g.created_at, u.name AS owner_name, u.email AS owner_email
+                FROM graphs g
+                LEFT JOIN users u ON u.id = g.user_id
+                WHERE g.is_public = TRUE
+                  AND (g.name ILIKE $1 OR g.description ILIKE $1)
+                ORDER BY g.created_at DESC
+                LIMIT $2 OFFSET $3
+                """,
+                pattern,
+                limit,
+                offset,
+            )
+        else:
+            rows = await conn.fetch(
+                """
+                SELECT g.id, g.name, COALESCE(g.description,'') AS description,
+                       g.tags, g.created_at, u.name AS owner_name, u.email AS owner_email
+                FROM graphs g
+                LEFT JOIN users u ON u.id = g.user_id
+                WHERE g.is_public = TRUE
+                ORDER BY g.created_at DESC
+                LIMIT $1 OFFSET $2
+                """,
+                limit,
+                offset,
+            )
+        return [dict(r) for r in rows]
+    finally:
+        await conn.close()
