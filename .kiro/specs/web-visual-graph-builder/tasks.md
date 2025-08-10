@@ -39,7 +39,7 @@ Branch naming convention: `<type>/<scope>[-detail]` where type ∈ {feat, fix, c
 ```
 meridian-studio/
 ├── frontend/          # React + Vite frontend
-├── backend/           # FastAPI backend  
+├── backend/           # FastAPI backend
 ├── docker-compose.yml # Development environment
 ├── README.md
 └── .env.example
@@ -52,10 +52,10 @@ meridian-studio/
 - [x] Create Docker Compose configuration with all services (frontend, backend, Supabase, Redis)
 - [x] Set up Vite + React + TypeScript frontend project using Deno 2 tasks for dev/build
 - [x] Add Tailwind CSS to the frontend scaffold
-- [ ] Add shadcn/ui to the frontend scaffold
+- [x] Add shadcn/ui to the frontend scaffold (base components wired)
 - [x] Create FastAPI backend project with modular structure (<200 LOC)
 - [x] Configure development scripts and environment variables
-- [ ] Add commit hooks for frequent commits
+- [x] Add commit hooks for frequent commits (pre-commit configured)
 - [x] Start local Supabase stack via CLI and create `.env` for local dev
   - _Requirements: 12.1, 12.2, 12.3_
 
@@ -63,7 +63,7 @@ meridian-studio/
 - [ ] 2.1 Create Supabase database schema and migrations
 - [x] Write SQL migrations for users, graphs, graph_executions, and shared_graphs tables
 - [x] Add message_traces and edge_metrics tables for real-time communication tracking
-- [ ] Set up Row Level Security (RLS) policies for data access control
+- [x] Set up Row Level Security (RLS) policies for data access control (0002_rls.sql)
 - [x] Create database indexes for performance optimization including message tracing queries
 - [x] Apply migrations locally via Supabase CLI
   - _Requirements: 9.3, 10.2, 11.2, 13.1, 14.1, 15.1_
@@ -71,6 +71,7 @@ meridian-studio/
 - [ ] 2.2 Implement authentication system
   - [x] Set up Supabase local stack and JWT secret/keys
   - [ ] Configure Supabase authentication providers (email/password, social)
+  - [x] Scaffold frontend auth UI (email/password form)
   - [x] Create FastAPI JWT auth dependency and protected route (`/me`)
   - [ ] Implement user session management
   - [x] Add authentication guards for protected API endpoints (start)

@@ -1,10 +1,12 @@
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 import os
+
 import asyncpg
 import redis.asyncio as aioredis
-from fastapi import Depends
-from .auth import get_current_user, AuthenticatedUser
+from fastapi import Depends, FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+from .auth import AuthenticatedUser, get_current_user
+from .graphs import router as graphs_router
 from .users import router as users_router
 
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:postgres@127.0.0.1:54322/postgres")
@@ -16,13 +18,15 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["*"]
-    ,allow_headers=["*"]
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
+
 
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
 
 @app.get("/health/db")
 async def health_db():
@@ -36,6 +40,7 @@ async def health_db():
     except Exception as exc:  # noqa: BLE001
         return {"status": "error", "db": False, "error": str(exc)}
 
+
 @app.get("/health/redis")
 async def health_redis():
     try:
@@ -46,10 +51,11 @@ async def health_redis():
     except Exception as exc:  # noqa: BLE001
         return {"status": "error", "redis": False, "error": str(exc)}
 
+
 @app.get("/me")
 async def me(user: AuthenticatedUser = Depends(get_current_user)):
     return {"user": user}
 
+
 app.include_router(users_router)
-
-
+app.include_router(graphs_router)
