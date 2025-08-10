@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .auth import AuthenticatedUser, get_current_user
 from .graphs import router as graphs_router
+from .sharing import router as sharing_router
 from .users import router as users_router
 
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:postgres@127.0.0.1:54322/postgres")
@@ -59,3 +60,4 @@ async def me(user: AuthenticatedUser = Depends(get_current_user)):
 
 app.include_router(users_router)
 app.include_router(graphs_router)
+app.include_router(sharing_router)
