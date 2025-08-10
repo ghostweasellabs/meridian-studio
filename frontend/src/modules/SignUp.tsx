@@ -4,25 +4,30 @@ import { Button } from "../components/ui/button";
 import { useAuth } from "./auth/AuthProvider";
 import { Link, Navigate } from "react-router-dom";
 
-export function AuthPage(): JSX.Element {
+export function SignUpPage(): JSX.Element {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const { user, signInWithEmailPassword } = useAuth();
+  const [info, setInfo] = useState<string | null>(null);
+  const { user, signUpWithEmailPassword } = useAuth();
 
-  async function onSignIn(e: React.FormEvent) {
+  async function onSignUp(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
-    const { error } = await signInWithEmailPassword(email, password);
+    setInfo(null);
+    const { error } = await signUpWithEmailPassword(email, password);
     if (error) setError(error);
+    else {setInfo(
+        "Account created. Check your email to confirm or sign in now.",
+      );}
   }
 
   if (user) return <Navigate to="/dashboard" replace />;
 
   return (
     <div className="p-6 max-w-sm mx-auto">
-      <h2 className="text-xl font-semibold">Sign in</h2>
-      <form className="mt-4 grid gap-3" onSubmit={onSignIn}>
+      <h2 className="text-xl font-semibold">Create account</h2>
+      <form className="mt-4 grid gap-3" onSubmit={onSignUp}>
         <Input
           placeholder="Email"
           type="email"
@@ -36,11 +41,12 @@ export function AuthPage(): JSX.Element {
           onChange={(e) => setPassword(e.target.value)}
         />
         {error ? <div className="text-red-600 text-sm">{error}</div> : null}
-        <Button type="submit">Continue</Button>
+        {info ? <div className="text-green-600 text-sm">{info}</div> : null}
+        <Button type="submit">Create account</Button>
       </form>
       <div className="mt-3 text-sm text-neutral-600">
-        Don’t have an account?{" "}
-        <Link to="/signup" className="underline">Sign up</Link>
+        Already have an account?{" "}
+        <Link to="/auth" className="underline">Sign in</Link>
       </div>
     </div>
   );
