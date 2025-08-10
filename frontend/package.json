@@ -9,13 +9,21 @@
     "preview": "vite preview --host"
   },
   "dependencies": {
+    "@types/react": "^19.1.9",
+    "@types/react-dom": "^19.1.7",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.8.0",
+    "@tanstack/react-query": "^5.84.2",
+    "zustand": "^5.0.7"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.1",
     "vite": "^5.4.2",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "tailwindcss": "^3.4.13",
+    "postcss": "^8.4.49",
+    "autoprefixer": "^10.4.20"
   }
 }
 
