@@ -70,7 +70,8 @@ meridian-studio/
 
 - [ ] 2.2 Implement authentication system
   - [x] Set up Supabase local stack and JWT secret/keys
-  - [ ] Configure Supabase authentication providers (email/password, social)
+  - [x] Configure Supabase email/password provider (local dev)
+  - [ ] Configure social providers (Google, GitHub)
   - [x] Scaffold frontend auth UI (email/password form)
   - [x] Create FastAPI JWT auth dependency and protected route (`/me`)
   - [ ] Implement user session management
@@ -101,7 +102,7 @@ meridian-studio/
 
 - [ ] 3.3 Implement graph sharing and collaboration features
   - [x] Create graph sharing API endpoints with permission levels
-  - Implement public graph discovery and gallery functionality
+  - [x] Implement public graph discovery and gallery functionality (endpoints + UI)
   - Add collaborative editing with conflict resolution
   - Write tests for sharing permissions and access control
   - _Requirements: 10.1, 10.2, 10.3, 10.4_
@@ -251,7 +252,7 @@ meridian-studio/
   - _Requirements: 4.1, 4.2, 4.3, 4.4_
 
 - [ ] 9.2 Build graph sharing and collaboration features
-  - Create graph sharing interface with permission management
+  - [x] Create graph sharing interface with permission management (backend + UI list)
   - Implement public graph gallery with search and filtering
   - Add collaborative editing with real-time synchronization
   - Create graph forking and version control functionality

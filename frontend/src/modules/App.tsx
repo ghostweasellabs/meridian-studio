@@ -7,6 +7,7 @@ import { AuthProvider } from "./auth/AuthProvider";
 import { ProtectedRoute } from "./auth/ProtectedRoute";
 import { Dashboard } from "./Dashboard";
 import { MyGraphs, PublicGallery } from "./Graphs";
+import { SignUpPage } from "./SignUp";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,7 @@ export function App(): JSX.Element {
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/auth" element={<AuthPage />} />
+                <Route path="/signup" element={<SignUpPage />} />
                 <Route
                   path="/dashboard"
                   element={
