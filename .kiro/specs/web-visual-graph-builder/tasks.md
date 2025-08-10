@@ -79,13 +79,13 @@ meridian-studio/
 
 - [ ] 2.3 Create user management API endpoints
   - Implement user registration and login endpoints
-  - Add user profile management functionality
+  - [x] Add user profile management functionality
   - Create user session handling and logout functionality
   - Write unit tests for authentication flows
   - _Requirements: 9.1, 9.2, 9.4_
 
 - [ ] 3. Build core graph management backend
-- [ ] 3.1 Implement graph data models and validation
+- [x] 3.1 Implement graph data models and validation
   - Create Pydantic models for GraphDefinition, NodeDefinition, EdgeDefinition
   - Implement graph validation logic with Meridian node type checking
   - Add graph serialization and deserialization functions
@@ -93,14 +93,14 @@ meridian-studio/
   - _Requirements: 4.1, 4.2, 6.1_
 
 - [ ] 3.2 Create graph CRUD API endpoints
-  - Implement create, read, update, delete endpoints for graphs
+  - [x] Implement create, read, update, delete endpoints for graphs
   - Add graph listing with pagination and filtering
   - Implement graph ownership and permission checking
   - Add graph metadata management (tags, descriptions)
   - _Requirements: 4.1, 4.3, 9.3, 9.4_
 
 - [ ] 3.3 Implement graph sharing and collaboration features
-  - Create graph sharing API endpoints with permission levels
+  - [x] Create graph sharing API endpoints with permission levels
   - Implement public graph discovery and gallery functionality
   - Add collaborative editing with conflict resolution
   - Write tests for sharing permissions and access control
@@ -120,7 +120,7 @@ meridian-studio/
   - Create graph structure validation using Meridian's validation system
   - Implement port compatibility checking for edge connections
   - Add real-time validation feedback during graph construction
-  - Create validation error reporting with specific node/edge locations
+  - [x] Create validation error reporting with specific node/edge locations
   - Track validation inconsistencies, missing rules, or unclear error messages
   - Document edge cases where Meridian validation could be improved
   - _Requirements: 6.1, 6.2, 6.3, 8.2_
