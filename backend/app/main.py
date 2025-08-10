@@ -3,6 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 import os
 import asyncpg
 import redis.asyncio as aioredis
+from fastapi import Depends
+from .auth import get_current_user, AuthenticatedUser
 
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:postgres@127.0.0.1:54322/postgres")
 REDIS_URL = os.getenv("REDIS_URL", "redis://127.0.0.1:6379")
@@ -42,5 +44,9 @@ async def health_redis():
         return {"status": "ok", "redis": pong}
     except Exception as exc:  # noqa: BLE001
         return {"status": "error", "redis": False, "error": str(exc)}
+
+@app.get("/me")
+async def me(user: AuthenticatedUser = Depends(get_current_user)):
+    return {"user": user}
 
 
