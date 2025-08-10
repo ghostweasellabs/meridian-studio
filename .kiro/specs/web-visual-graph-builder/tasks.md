@@ -69,10 +69,11 @@ meridian-studio/
   - _Requirements: 9.3, 10.2, 11.2, 13.1, 14.1, 15.1_
 
 - [ ] 2.2 Implement authentication system
-  - Set up Supabase authentication with email/password and social providers
-  - Create FastAPI authentication middleware and dependency injection
-  - Implement JWT token validation and user session management
-  - Add authentication guards for protected API endpoints
+  - [x] Set up Supabase local stack and JWT secret/keys
+  - [ ] Configure Supabase authentication providers (email/password, social)
+  - [x] Create FastAPI JWT auth dependency and protected route (`/me`)
+  - [ ] Implement user session management
+  - [x] Add authentication guards for protected API endpoints (start)
   - _Requirements: 9.1, 9.2_
 
 - [ ] 2.3 Create user management API endpoints
