@@ -5,6 +5,7 @@ import asyncpg
 import redis.asyncio as aioredis
 from fastapi import Depends
 from .auth import get_current_user, AuthenticatedUser
+from .users import router as users_router
 
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:postgres@127.0.0.1:54322/postgres")
 REDIS_URL = os.getenv("REDIS_URL", "redis://127.0.0.1:6379")
@@ -48,5 +49,7 @@ async def health_redis():
 @app.get("/me")
 async def me(user: AuthenticatedUser = Depends(get_current_user)):
     return {"user": user}
+
+app.include_router(users_router)
 
 
