@@ -1,16 +1,23 @@
 import React, { useState } from "react";
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
+import { useAuth } from "./auth/AuthProvider";
+import { Link, Navigate } from "react-router-dom";
 
 export function AuthPage(): JSX.Element {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const { user, signInWithEmailPassword } = useAuth();
 
-  function onSignIn(e: React.FormEvent) {
+  async function onSignIn(e: React.FormEvent) {
     e.preventDefault();
-    // TODO: Wire supabase-js sign in
-    alert(`Signing in: ${email}`);
+    setError(null);
+    const { error } = await signInWithEmailPassword(email, password);
+    if (error) setError(error);
   }
+
+  if (user) return <Navigate to="/dashboard" replace />;
 
   return (
     <div className="p-6 max-w-sm mx-auto">
@@ -28,8 +35,12 @@ export function AuthPage(): JSX.Element {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+        {error ? <div className="text-red-600 text-sm">{error}</div> : null}
         <Button type="submit">Continue</Button>
       </form>
+      <div className="mt-3 text-sm text-neutral-600">
+        Don’t have an account? <Link to="#" className="underline">Sign up</Link>
+      </div>
     </div>
   );
 }
