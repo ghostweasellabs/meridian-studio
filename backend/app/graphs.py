@@ -1,6 +1,6 @@
 import json
 import os
-from typing import List
+from typing import List, Optional
 
 import asyncpg
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -14,19 +14,45 @@ router = APIRouter(prefix="/graphs", tags=["graphs"])
 
 
 @router.get("/", response_model=List[GraphDefinition])
-async def list_graphs(user: AuthenticatedUser = Depends(get_current_user)):
+async def list_graphs(
+    user: AuthenticatedUser = Depends(get_current_user),
+    search: Optional[str] = None,
+    limit: int = 20,
+    offset: int = 0,
+):
     conn = await asyncpg.connect(DATABASE_URL)
     try:
-        rows = await conn.fetch(
-            """
-            SELECT id, user_id, name, COALESCE(description,'') as description,
-                   definition, is_public, tags, created_at, updated_at
-            FROM graphs
-            WHERE user_id = $1
-            ORDER BY created_at DESC
-            """,
-            user["user_id"],
-        )
+        if search:
+            pattern = f"%{search}%"
+            rows = await conn.fetch(
+                """
+                SELECT id, user_id, name, COALESCE(description,'') as description,
+                       definition, is_public, tags, created_at, updated_at
+                FROM graphs
+                WHERE user_id = $1
+                  AND (name ILIKE $2 OR description ILIKE $2)
+                ORDER BY created_at DESC
+                LIMIT $3 OFFSET $4
+                """,
+                user["user_id"],
+                pattern,
+                limit,
+                offset,
+            )
+        else:
+            rows = await conn.fetch(
+                """
+                SELECT id, user_id, name, COALESCE(description,'') as description,
+                       definition, is_public, tags, created_at, updated_at
+                FROM graphs
+                WHERE user_id = $1
+                ORDER BY created_at DESC
+                LIMIT $2 OFFSET $3
+                """,
+                user["user_id"],
+                limit,
+                offset,
+            )
         result: List[GraphDefinition] = []
         for r in rows:
             import json as _json
