@@ -7,7 +7,9 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .auth import AuthenticatedUser, get_current_user
 from .graphs import router as graphs_router
+from .models import GraphDefinition
 from .users import router as users_router
+from .validation import ValidationResponse, validate_graph
 
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:postgres@127.0.0.1:54322/postgres")
 REDIS_URL = os.getenv("REDIS_URL", "redis://127.0.0.1:6379")
@@ -59,3 +61,8 @@ async def me(user: AuthenticatedUser = Depends(get_current_user)):
 
 app.include_router(users_router)
 app.include_router(graphs_router)
+
+
+@app.post("/graphs/validate", response_model=ValidationResponse)
+async def validate(graph: GraphDefinition):
+    return validate_graph(graph)
