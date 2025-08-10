@@ -6,6 +6,8 @@ import { AuthPage } from "./Auth";
 import { AuthProvider } from "./auth/AuthProvider";
 import { ProtectedRoute } from "./auth/ProtectedRoute";
 import { Dashboard } from "./Dashboard";
+import { MyGraphs, PublicGallery } from "./Graphs";
+import { SignUpPage } from "./SignUp";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +33,8 @@ export function App(): JSX.Element {
               <nav className="text-sm text-neutral-600 flex gap-3">
                 <Link to="/">Home</Link>
                 <Link to="/dashboard">Dashboard</Link>
+                <Link to="/graphs">My Graphs</Link>
+                <Link to="/gallery">Public Gallery</Link>
                 <Link to="/auth">Sign in</Link>
               </nav>
               <div className="ml-auto">
@@ -41,6 +45,7 @@ export function App(): JSX.Element {
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/auth" element={<AuthPage />} />
+                <Route path="/signup" element={<SignUpPage />} />
                 <Route
                   path="/dashboard"
                   element={
@@ -49,6 +54,15 @@ export function App(): JSX.Element {
                     </ProtectedRoute>
                   }
                 />
+                <Route
+                  path="/graphs"
+                  element={
+                    <ProtectedRoute>
+                      <MyGraphs />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route path="/gallery" element={<PublicGallery />} />
               </Routes>
             </main>
           </div>
