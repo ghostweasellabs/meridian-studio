@@ -31,6 +31,8 @@ downloads/
 eggs/
 .eggs/
 lib/
+!frontend/src/lib/
+!frontend/src/lib/**
 lib64/
 parts/
 sdist/
@@ -195,6 +197,9 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+
+# Frontend local env
+frontend/.env.local
 
 .kiro/
 

@@ -49,6 +49,8 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 cp .env.example .env
 ```
 
+Ensure `JWT_SECRET` is the same for both Supabase and the backend (docker-compose passes it to both). Fill Supabase keys from your project or local stack.
+
 2. Start the stack:
 
 ```
@@ -66,7 +68,9 @@ docker compose up --build
 
 ```
 cd frontend
-deno task dev
+cp .env.example .env.local
+# set VITE_API_URL, VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY
+ deno task dev
 ```
 
 Build/preview:
@@ -113,4 +117,7 @@ This project is licensed under the MIT License — see `LICENSE`.
 
 This is an initial scaffold aligned with the design, requirements, and tasks specs under `.kiro/specs/web-visual-graph-builder/`. Stubs for APIs and migrations are included to unblock incremental development.
 
-
+### Auth Notes
+- Email/password auth is supported via Supabase. Enable it in Supabase Auth settings (Providers > Email).
+- Social providers (Google/GitHub) are optional and can be added later by configuring provider keys and auth callback URLs in Supabase, then adding UI buttons that call `supabase.auth.signInWithOAuth`.
+- Frontend attaches the Supabase access token as `Authorization: Bearer <token>` for authenticated API calls.
